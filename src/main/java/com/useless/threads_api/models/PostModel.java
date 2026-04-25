@@ -19,7 +19,6 @@ public class PostModel {
 	private String uid;
 	private String username;
 	private String text;
-	private String imageUrl;
 
 	@ServerTimestamp
 	private Date createdAt;
