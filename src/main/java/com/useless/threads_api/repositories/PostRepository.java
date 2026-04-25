@@ -19,19 +19,24 @@ public class PostRepository {
 		this._firestore = firestore;
 	}
 
-	public String savePost(PostModel post) throws Exception {
-		System.out.println("Tentando salvar post de: " + post.getUsername());
-		ApiFuture<DocumentReference> future = _firestore.collection("posts").add(post);
-		String id = future.get().getId();
-		System.out.println("Salvo com ID: " + id);
-		return id;
+	public String savePost(PostModel post) {
+		try {
+			ApiFuture<DocumentReference> future = _firestore.collection("posts").add(post);
+			return future.get().getId();
+		} catch(Exception e) {
+			throw new RuntimeException("Error saving post: " + e.getMessage());
+		}
 	}
 
-	public List<PostModel> getAllPosts() throws Exception {
-		ApiFuture<QuerySnapshot> query = _firestore.collection("posts")
-				.orderBy("createdAt", Query.Direction.DESCENDING)
-				.get();
+	public List<PostModel> getAllPosts() {
+		try {
+			ApiFuture<QuerySnapshot> query = _firestore
+					.collection("posts")
+					.orderBy("createdAt", Query.Direction.DESCENDING).get();
 
-		return query.get().toObjects(PostModel.class);
+			return query.get().toObjects(PostModel.class);
+		} catch (Exception e) {
+			throw new RuntimeException("Error retrieving posts: " + e.getMessage());
+		}
 	}
 }
