@@ -23,22 +23,13 @@ public class PostController {
 
 	@PostMapping
 	public ResponseEntity<String> createPost(@RequestBody PostModel post) {
-		try {
-			String id = _postRepository.savePost(post);
-			return ResponseEntity.status(201).body(id);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.internalServerError().body("Error creating user");
-		}
+		String id = _postRepository.savePost(post);
+		return ResponseEntity.status(201).body(id);
 	}
 
 	@GetMapping
 	public ResponseEntity<List<PostModel>> listPosts() {
-		try {
-			List<PostModel> posts = _postRepository.getAllPosts();
-			return ResponseEntity.ok(posts);
-		} catch (Exception e) {
-			return ResponseEntity.internalServerError().build();
-		}
+		List<PostModel> posts = _postRepository.getAllPosts();
+		return ResponseEntity.ok(posts);
 	}
 }
