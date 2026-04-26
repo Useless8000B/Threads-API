@@ -15,28 +15,31 @@ import com.google.cloud.firestore.Query;
 public class PostRepository {
 	private final Firestore _firestore;
 
-	private PostRepository(Firestore firestore) {
+	public PostRepository(Firestore firestore) {
 		this._firestore = firestore;
 	}
 
-	public String savePost(PostModel post) {
-		try {
-			ApiFuture<DocumentReference> future = _firestore.collection("posts").add(post);
-			return future.get().getId();
-		} catch(Exception e) {
-			throw new RuntimeException("Error saving post: " + e.getMessage());
-		}
+	public String savePost(PostModel post) throws Exception {
+		ApiFuture<DocumentReference> future = _firestore.collection("posts").add(post);
+		return future.get().getId();
 	}
 
-	public List<PostModel> getAllPosts() {
-		try {
-			ApiFuture<QuerySnapshot> query = _firestore
-					.collection("posts")
-					.orderBy("createdAt", Query.Direction.DESCENDING).get();
+	public List<PostModel> getAllPosts() throws Exception {
+		ApiFuture<QuerySnapshot> query = _firestore
+				.collection("posts")
+				.orderBy("createdAt", Query.Direction.DESCENDING).get();
 
-			return query.get().toObjects(PostModel.class);
-		} catch (Exception e) {
-			throw new RuntimeException("Error retrieving posts: " + e.getMessage());
-		}
+		return query.get().toObjects(PostModel.class);
+
+	}
+
+	public List<PostModel> findByUuid(String uid) throws Exception {
+		ApiFuture<QuerySnapshot> query = _firestore
+		.collection("posts")
+		.whereEqualTo("uid", uid)
+		.orderBy("createdAt", Query.Direction.DESCENDING)
+		.get();
+
+		return query.get().toObjects(PostModel.class);
 	}
 }
