@@ -1,19 +1,43 @@
 package com.useless.threads_api.exceptions;
 
+import java.time.LocalDateTime;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.useless.threads_api.dto.ErrorResponse;
+
+import jakarta.servlet.http.HttpServletRequest;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
 	@ExceptionHandler(Exception.class)
-	public ResponseEntity<String> handleGenericException(Exception e) {
-		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unxepected error ocurred!");
+	public ResponseEntity<ErrorResponse> handleGenericException(Exception e, HttpServletRequest request) {
+		HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+		return buildErrorResponse(status, e, request);
 	}
 
-	@ExceptionHandler(NotFoundExceptionHandler.class)
-	public ResponseEntity<String> handleNotFoundException(NotFoundExceptionHandler e) {
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+	@ExceptionHandler(NotFoundException.class)
+	public ResponseEntity<ErrorResponse> handleNotFoundException(NotFoundException e, HttpServletRequest request) {
+		HttpStatus status = HttpStatus.NOT_FOUND;
+		return buildErrorResponse(status, e, request);
+	}
+
+	private ResponseEntity<ErrorResponse> buildErrorResponse(
+		HttpStatus status,
+		Exception e,
+		HttpServletRequest request
+	) {
+		ErrorResponse error = new ErrorResponse(
+			LocalDateTime.now(),
+			status.value(),
+			status.getReasonPhrase(),
+			e.getMessage(),
+			request.getRequestURI()
+		);
+
+		return ResponseEntity.status(status).body(error);
 	}
 }
