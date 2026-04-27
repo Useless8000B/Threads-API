@@ -31,18 +31,22 @@ public class GlobalExceptionHandler {
 		return buildErrorResponse(status, e, request);
 	}
 
+	@ExceptionHandler(UnauthorizedException.class)
+	public ResponseEntity<ErrorResponse> handleUnauthorized(UnauthorizedException e, HttpServletRequest request) {
+		HttpStatus status = HttpStatus.UNAUTHORIZED;
+		return buildErrorResponse(status, e, request);
+	}
+
 	private ResponseEntity<ErrorResponse> buildErrorResponse(
-		HttpStatus status,
-		Exception e,
-		HttpServletRequest request
-	) {
+			HttpStatus status,
+			Exception e,
+			HttpServletRequest request) {
 		ErrorResponse error = new ErrorResponse(
-			LocalDateTime.now(),
-			status.value(),
-			status.getReasonPhrase(),
-			e.getMessage(),
-			request.getRequestURI()
-		);
+				LocalDateTime.now(),
+				status.value(),
+				status.getReasonPhrase(),
+				e.getMessage(),
+				request.getRequestURI());
 
 		return ResponseEntity.status(status).body(error);
 	}
