@@ -9,22 +9,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.useless.threads_api.models.PostModel;
+import com.useless.threads_api.exceptions.ForbiddenException;
+import com.useless.threads_api.model.PostModel;
 import com.useless.threads_api.repositories.PostRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/posts")
+@RequiredArgsConstructor
 public class PostController {
 	private final PostRepository _postRepository;
 
-	public PostController(PostRepository postRepository) {
-		this._postRepository = postRepository;
-	}
-
 	@PostMapping
-	public ResponseEntity<String> createPost(@RequestBody PostModel post) throws Exception {
+	public ResponseEntity<String> createPost(@RequestBody PostModel post, HttpServletRequest request) throws Exception {
+		String uuid = (String) request.getAttribute("uuid");
+
+		if (uuid == null) {
+			throw new ForbiddenException("User not authenticated!");
+		}
+
 		String id = _postRepository.savePost(post);
 		return ResponseEntity.status(201).body(id);
 	}
