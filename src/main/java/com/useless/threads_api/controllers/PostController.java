@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.useless.threads_api.exceptions.ForbiddenException;
 import com.useless.threads_api.model.PostModel;
-import com.useless.threads_api.repositories.PostRepository;
+import com.useless.threads_api.repository.PostRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

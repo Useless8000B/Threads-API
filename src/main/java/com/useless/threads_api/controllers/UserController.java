@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.useless.threads_api.exceptions.ForbiddenException;
 import com.useless.threads_api.model.UserModel;
-import com.useless.threads_api.repositories.UserRepository;
+import com.useless.threads_api.repository.UserRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
