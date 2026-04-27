@@ -1,6 +1,7 @@
 package com.useless.threads_api.model;
 
-import com.google.cloud.Date;
+import java.util.Date;
+
 import com.google.cloud.firestore.annotation.DocumentId;
 import com.google.cloud.firestore.annotation.ServerTimestamp;
 
