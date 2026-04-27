@@ -47,7 +47,7 @@ public class PostController {
 	public ResponseEntity<List<PostModel>> getMyPosts(HttpServletRequest request) throws Exception {
 		String uid = (String) request.getAttribute("uid");
 
-		List<PostModel> posts = _postRepository.findByUuid(uid);
+		List<PostModel> posts = _postRepository.findByUid(uid);
 
 		return ResponseEntity.ok(posts);
 	}

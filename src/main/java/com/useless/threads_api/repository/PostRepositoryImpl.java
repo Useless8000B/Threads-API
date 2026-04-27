@@ -37,7 +37,7 @@ public class PostRepositoryImpl implements PostRepository {
 	}
 
 	@Override
-	public List<PostModel> findByUuid(String uid) throws Exception {
+	public List<PostModel> findByUid(String uid) throws Exception {
 		ApiFuture<QuerySnapshot> query = _firestore
 		.collection("posts")
 		.whereEqualTo("uid", uid)
