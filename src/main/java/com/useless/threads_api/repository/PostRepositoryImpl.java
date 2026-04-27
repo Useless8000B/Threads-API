@@ -29,10 +29,11 @@ public class PostRepositoryImpl implements PostRepository {
 	public List<PostModel> getAllPosts() throws Exception {
 		ApiFuture<QuerySnapshot> query = _firestore
 				.collection("posts")
-				.orderBy("createdAt", Query.Direction.DESCENDING).get();
+				.orderBy("createdAt", Query.Direction.DESCENDING)
+				.limit(50)
+				.get();
 
 		return query.get().toObjects(PostModel.class);
-
 	}
 
 	@Override
