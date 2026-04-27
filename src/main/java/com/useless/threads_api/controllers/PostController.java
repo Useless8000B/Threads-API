@@ -24,7 +24,7 @@ public class PostController {
 
 	@PostMapping
 	public ResponseEntity<String> createPost(@RequestBody PostModel post, HttpServletRequest request) throws Exception {
-		String uuid = (String) request.getAttribute("uuid");
+		String uuid = (String) request.getAttribute("uid");
 
 		if (uuid == null) {
 			throw new UnauthorizedException("User not authenticated!");
