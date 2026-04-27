@@ -24,7 +24,9 @@ public class FirebaseTokenFilter  extends OncePerRequestFilter {
 						FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(token);
 
 						request.setAttribute("uid", decodedToken.getUid());
-					} catch (Exception e) {}
+					} catch (Exception e) {
+						logger.debug(e);
+					}
 				}
 		filterChain.doFilter(request, response);
 	}
