@@ -1,4 +1,4 @@
-package com.useless.threads_api.models;
+package com.useless.threads_api.model;
 
 import java.util.Date;
 
