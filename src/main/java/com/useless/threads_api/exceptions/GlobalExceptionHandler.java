@@ -25,6 +25,12 @@ public class GlobalExceptionHandler {
 		return buildErrorResponse(status, e, request);
 	}
 
+	@ExceptionHandler(ForbiddenException.class)
+	public ResponseEntity<ErrorResponse> handleForbiddenExceptin(ForbiddenException e, HttpServletRequest request) {
+		HttpStatus status = HttpStatus.FORBIDDEN;
+		return buildErrorResponse(status, e, request);
+	}
+
 	private ResponseEntity<ErrorResponse> buildErrorResponse(
 		HttpStatus status,
 		Exception e,
