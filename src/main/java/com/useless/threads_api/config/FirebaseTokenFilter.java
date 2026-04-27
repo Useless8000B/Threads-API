@@ -22,11 +22,8 @@ public class FirebaseTokenFilter  extends OncePerRequestFilter {
 					String token = header.substring(7);
 					try {
 						FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(token);
-
 						request.setAttribute("uid", decodedToken.getUid());
-					} catch (Exception e) {
-						logger.debug(e);
-					}
+					} catch (Exception e) {}
 				}
 		filterChain.doFilter(request, response);
 	}
