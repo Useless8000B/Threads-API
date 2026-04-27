@@ -1,4 +1,4 @@
-package com.useless.threads_api.repositories;
+package com.useless.threads_api.repository;
 
 import org.springframework.stereotype.Repository;
 
@@ -26,7 +26,7 @@ public class UserRepositoryImpl implements UserRepository {
 			throw new ForbiddenException("User already exists!");
 		}
 
-		_firestore.collection("users").document(user.getId()).set(user);
+		_firestore.collection("users").document(user.getUid()).set(user);
 
 		return user.getUid();
 	}

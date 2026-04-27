@@ -1,4 +1,4 @@
-package com.useless.threads_api.repositories;
+package com.useless.threads_api.repository;
 
 import java.util.List;
 
