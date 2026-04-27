@@ -1,7 +1,7 @@
 package com.useless.threads_api.exceptions;
 
 public class NotFoundException extends RuntimeException {
-	NotFoundException(String message) {
+	public NotFoundException(String message) {
 		super(message);
 	}
 }
