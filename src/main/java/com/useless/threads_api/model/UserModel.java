@@ -1,7 +1,6 @@
 package com.useless.threads_api.model;
 
-import java.time.LocalDateTime;
-
+import com.google.cloud.Date;
 import com.google.cloud.firestore.annotation.DocumentId;
 import com.google.cloud.firestore.annotation.ServerTimestamp;
 
@@ -16,8 +15,10 @@ public class UserModel {
 	@DocumentId
 	private String id;
 	private String bio;
+
 	@ServerTimestamp
-	LocalDateTime createdAt;
+	Date createdAt;
+
 	String email;
 	String fullName;
 	String photoUrl;
