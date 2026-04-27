@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.useless.threads_api.exceptions.ForbiddenException;
+import com.useless.threads_api.exceptions.UnauthorizedException;
 import com.useless.threads_api.model.PostModel;
 import com.useless.threads_api.repository.PostRepository;
 
@@ -27,15 +27,18 @@ public class PostController {
 		String uuid = (String) request.getAttribute("uuid");
 
 		if (uuid == null) {
-			throw new ForbiddenException("User not authenticated!");
+			throw new UnauthorizedException("User not authenticated!");
 		}
 
+		post.setUid(uuid);
+
 		String id = _postRepository.savePost(post);
+
 		return ResponseEntity.status(201).body(id);
 	}
 
 	@GetMapping
-	public ResponseEntity<List<PostModel>> listPosts() throws Exception {
+	public ResponseEntity<List<PostModel>> listPosts(HttpServletRequest request) throws Exception {
 		List<PostModel> posts = _postRepository.getAllPosts();
 		return ResponseEntity.ok(posts);
 	}
