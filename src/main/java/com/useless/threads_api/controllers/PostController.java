@@ -24,13 +24,13 @@ public class PostController {
 
 	@PostMapping
 	public ResponseEntity<String> createPost(@RequestBody PostModel post, HttpServletRequest request) throws Exception {
-		String uuid = (String) request.getAttribute("uid");
+		String uid = (String) request.getAttribute("uid");
 
-		if (uuid == null) {
+		if (uid == null) {
 			throw new UnauthorizedException("User not authenticated!");
 		}
 
-		post.setUid(uuid);
+		post.setUid(uid);
 
 		String id = _postRepository.savePost(post);
 
