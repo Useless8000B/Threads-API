@@ -17,7 +17,7 @@ public class SecurityConfig {
         .csrf(csrf -> csrf.disable())
             .addFilterBefore(new FirebaseTokenFilter(), UsernamePasswordAuthenticationFilter.class)
             .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/api/register").permitAll()
+            .requestMatchers("/api/register", "/api/health").permitAll()
             .requestMatchers("/api/posts", "/api/posts/**").authenticated().anyRequest().authenticated()
         );
         return http.build();
